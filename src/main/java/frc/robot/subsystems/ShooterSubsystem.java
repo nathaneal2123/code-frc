@@ -6,6 +6,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import edu.wpi.first.math.system.plant.DCMotor;
 import static edu.wpi.first.units.Units.*;
 import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -38,7 +39,7 @@ public class ShooterSubsystem extends SubsystemBase {
             Constants.ShooterConstants.kD)
         .withTelemetry("ShooterLeftMotor", TelemetryVerbosity.HIGH)
         .withGearing(new MechanismGearing(GearBox.fromReductionStages(1)))
-        .withMotorInverted(false)
+        .withMotorInverted(true)
         .withIdleMode(MotorMode.COAST)
         .withStatorCurrentLimit(Amps.of(Constants.ShooterConstants.kStatorCurrentLimit));
 
@@ -91,11 +92,11 @@ public class ShooterSubsystem extends SubsystemBase {
     /** Spin both launchers at the given RPM, stop when command ends */
     public Command shootBothCommand(double targetRPM) {
         return run(() -> {
-            leftSMC.setVelocity(RPM.of(targetRPM));
-            rightSMC.setVelocity(RPM.of(targetRPM));
+            leftMotor.set(0.5);
+            rightMotor.set(0.5);
         }).finallyDo(() -> {
-            leftSMC.setDutyCycle(0);
-            rightSMC.setDutyCycle(0);
+            leftMotor.set(0);
+            rightMotor.set(0);
         }).withName("Shooter.ShootBoth");
     }
 
@@ -104,6 +105,11 @@ public class ShooterSubsystem extends SubsystemBase {
         return Commands.parallel(
             leftLauncher.runTo(RPM.of(targetRPM), RPM_TOLERANCE).asProxy(),
             rightLauncher.runTo(RPM.of(targetRPM), RPM_TOLERANCE).asProxy()
+        ).andThen(
+            run(() -> {
+                leftSMC.setVelocity(RPM.of(targetRPM));
+                rightSMC.setVelocity(RPM.of(targetRPM));
+            })
         ).withName("Shooter.SpinUpAndWait");
     }
 

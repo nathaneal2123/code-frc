@@ -5,7 +5,6 @@
 package frc.robot;
 
 import static edu.wpi.first.units.Units.*;
-import static edu.wpi.first.units.Units.Degrees;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
@@ -124,6 +123,11 @@ public class RobotContainer {
         joystick.x().whileTrue(
             hopper.feedCommand().alongWith(feeder.forwardCommand())
         );
+        // POV Left - Spin shooters
+        joystick.povLeft().whileTrue(shooter.shootBothCommand(ShooterSubsystem.DEFAULT_SHOOT_RPM));
+
+        // POV Right - Intake roller only
+        joystick.povRight().whileTrue(intake.intakeCommand());
 
         // Hold Left Trigger - Shoot sequence
         joystick.leftTrigger().whileTrue(shootSequence());
@@ -159,20 +163,15 @@ public class RobotContainer {
     }
 
     private Command shootSequence() {
-        return Commands.sequence(
-            // Move intake to feed position while spinning up
-            Commands.parallel(
-                intake.setPivotAngle(Degrees.of(59)),
-                shooter.spinUpAndWaitCommand(ShooterSubsystem.DEFAULT_SHOOT_RPM)
-            ),
-            // Keep shooter running and start feeding
-            Commands.parallel(
-                shooter.shootBothCommand(ShooterSubsystem.DEFAULT_SHOOT_RPM),
-                hopper.feedCommand(),
-                feeder.forwardCommand()
-            )
+        return Commands.parallel(
+            intake.setPivotAngle(Degrees.of(59)),
+            shooter.shootBothCommand(ShooterSubsystem.DEFAULT_SHOOT_RPM),
+            Commands.waitSeconds(1.0)
+                .andThen(Commands.parallel(
+                    hopper.feedCommand(),
+                    feeder.forwardCommand()
+                ))
         )
-        .finallyDo(() -> {})
         .withName("ShootSequence");
     }
 
