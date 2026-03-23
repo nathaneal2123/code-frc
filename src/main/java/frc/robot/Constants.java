@@ -41,7 +41,7 @@ public final class Constants {
         public static final int kRightMotorId = 31; // change to actual CAN ID
 
         // Tuning — adjust these on the actual robot
-        public static final double kDefaultShootRPM = 3000;
+        public static final double kDefaultShootRPM = -5000;
         public static final double kRPMTolerance     = 100;
         public static final double kP                = 0.0006;
         public static final double kI                = 0;

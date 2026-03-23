@@ -92,12 +92,14 @@ public class ShooterSubsystem extends SubsystemBase {
     /** Spin both launchers at the given RPM, stop when command ends */
     public Command shootBothCommand(double targetRPM) {
         return run(() -> {
-            leftMotor.set(0.5);
-            rightMotor.set(0.5);
+            leftSMC.setVelocity(RPM.of(targetRPM));
+            rightSMC.setVelocity(RPM.of(targetRPM));
         }).finallyDo(() -> {
-            leftMotor.set(0);
-            rightMotor.set(0);
-        }).withName("Shooter.ShootBoth");
+            leftSMC.setDutyCycle(0);
+            rightSMC.setDutyCycle(0);
+        })
+        .withInterruptBehavior(Command.InterruptionBehavior.kCancelSelf)
+        .withName("Shooter.ShootBoth");
     }
 
     /** Spin up and wait until both are at speed */
@@ -116,14 +118,14 @@ public class ShooterSubsystem extends SubsystemBase {
     /** Fire just the left launcher */
     public Command shootLeftCommand(double targetRPM) {
         return run(() -> leftSMC.setVelocity(RPM.of(targetRPM)))
-            .finallyDo(() -> leftSMC.setDutyCycle(0))
+            .finallyDo(() -> leftSMC.setDutyCycle(-1))
             .withName("Shooter.ShootLeft");
     }
 
     /** Fire just the right launcher */
     public Command shootRightCommand(double targetRPM) {
         return run(() -> rightSMC.setVelocity(RPM.of(targetRPM)))
-            .finallyDo(() -> rightSMC.setDutyCycle(0))
+            .finallyDo(() -> rightSMC.setDutyCycle(-1))
             .withName("Shooter.ShootRight");
     }
 
@@ -139,6 +141,8 @@ public class ShooterSubsystem extends SubsystemBase {
     public void periodic() {
         leftLauncher.updateTelemetry();
         rightLauncher.updateTelemetry();
+        SmartDashboard.putNumber("Shooter Left RPM", leftSMC.getRotorVelocity().in(RPM));
+        SmartDashboard.putNumber("Shooter Right RPM", rightSMC.getRotorVelocity().in(RPM));
     }
 
     @Override

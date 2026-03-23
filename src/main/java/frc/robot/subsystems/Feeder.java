@@ -18,7 +18,7 @@ public class Feeder extends SubsystemBase {
 
     private final SparkMax feederMotor;
 
-    private static final double FEED_SPEED = 0.6;   // forward feeding speed
+    private static final double FEED_SPEED = 0.1;   // forward feeding speed
     private static final double REVERSE_SPEED = -0.5; // reverse/unjam speed
 
     // --- Mechanism2d for visualization ---

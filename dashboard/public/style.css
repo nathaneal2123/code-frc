@@ -1,0 +1,260 @@
+/* ── Reset & Variables ──────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:      #0d0d0d;
+  --surface: #111111;
+  --border:  #1f1f1f;
+  --border2: #2a2a2a;
+  --muted:   #3a3a3a;
+  --label:   #555555;
+  --text:    #d8d8d8;
+  --dim:     #888888;
+
+  --green:  #00ff7f;
+  --red:    #ff3333;
+  --amber:  #ffaa00;
+  --cyan:   #00e5ff;
+  --blue:   #2288ff;
+
+  --font: 'Courier New', Consolas, 'Lucida Console', monospace;
+}
+
+html, body {
+  background: var(--bg);
+  color:      var(--text);
+  font-family: var(--font);
+  height: 100%;
+  overflow: hidden;
+  font-size: 13px;
+}
+
+/* ── Header ─────────────────────────────────────────────────────────────── */
+header {
+  display:     flex;
+  align-items: center;
+  gap:         12px;
+  height:      60px;
+  padding:     0 16px;
+  background:  #090909;
+  border-bottom: 2px solid var(--border2);
+  flex-shrink: 0;
+}
+
+.team-num {
+  font-size:      30px;
+  font-weight:    bold;
+  color:          var(--cyan);
+  letter-spacing: 3px;
+  flex-shrink:    0;
+  opacity:        0.9;
+}
+
+.timer {
+  flex:            1;
+  text-align:      center;
+  font-size:       46px;
+  font-weight:     bold;
+  letter-spacing:  5px;
+  font-variant-numeric: tabular-nums;
+  color:           var(--text);
+  transition:      color 0.3s;
+}
+.timer.timer-amber { color: var(--amber); }
+.timer.timer-red   { color: var(--red);   animation: pulse 0.6s infinite alternate; }
+
+@keyframes pulse { from { opacity: 1; } to { opacity: 0.5; } }
+
+.badges {
+  display:     flex;
+  gap:         8px;
+  flex-shrink: 0;
+}
+
+.badge {
+  font-size:      10px;
+  font-weight:    bold;
+  letter-spacing: 1.5px;
+  padding:        4px 10px;
+  border:         1px solid currentColor;
+  transition:     color 0.2s, opacity 0.2s;
+}
+.badge-ok   { color: var(--green); }
+.badge-err  { color: var(--red);   }
+.badge-warn { color: var(--amber); }
+.badge-info { color: var(--cyan);  }
+.badge-off  { color: var(--muted); opacity: 0.5; }
+
+/* ── Layout Grid ────────────────────────────────────────────────────────── */
+.grid {
+  display:               grid;
+  grid-template-columns: 210px 1fr 260px 190px;
+  gap:                   6px;
+  padding:               6px;
+  height:                calc(100vh - 60px);
+}
+
+/* ── Panel ──────────────────────────────────────────────────────────────── */
+.panel {
+  background:    var(--surface);
+  border:        1px solid var(--border);
+  padding:       12px 14px;
+  display:       flex;
+  flex-direction: column;
+  gap:           10px;
+  overflow:      hidden;
+}
+
+.panel-label {
+  font-size:      9px;
+  font-weight:    bold;
+  letter-spacing: 3px;
+  color:          var(--label);
+  border-bottom:  1px solid var(--border);
+  padding-bottom: 7px;
+}
+
+.separator {
+  border-top: 1px solid var(--border);
+  margin:     2px 0;
+}
+
+/* ── Field labels & values ───────────────────────────────────────────────── */
+.field-label {
+  font-size:      9px;
+  letter-spacing: 1.5px;
+  color:          var(--label);
+  text-transform: uppercase;
+}
+
+.big-val {
+  font-size:           22px;
+  font-variant-numeric: tabular-nums;
+  color:               var(--text);
+  min-width:           80px;
+  text-align:          right;
+}
+
+.med-val {
+  font-size:           16px;
+  font-variant-numeric: tabular-nums;
+  color:               var(--dim);
+  min-width:           50px;
+  text-align:          right;
+  transition:          color 0.15s;
+}
+
+/* ── Auto Chooser ────────────────────────────────────────────────────────── */
+select {
+  background:  #181818;
+  color:       var(--text);
+  border:      1px solid var(--border2);
+  font-family: var(--font);
+  font-size:   12px;
+  padding:     6px 8px;
+  width:       100%;
+  cursor:      pointer;
+  appearance:  none;
+  -webkit-appearance: none;
+  outline:     none;
+}
+select:focus  { border-color: var(--cyan); }
+select option { background: #181818; }
+
+.auto-status {
+  display:     flex;
+  align-items: baseline;
+  gap:         6px;
+  margin-top:  auto;
+}
+
+.auto-active-val {
+  font-size:  13px;
+  color:      var(--cyan);
+  word-break: break-all;
+}
+
+/* ── Motor Block ─────────────────────────────────────────────────────────── */
+.motor-block {
+  display:        flex;
+  flex-direction: column;
+  gap:            5px;
+}
+
+.motor-header {
+  display:         flex;
+  justify-content: space-between;
+  align-items:     baseline;
+}
+
+/* ── RPM Bar ─────────────────────────────────────────────────────────────── */
+.rpm-track {
+  position:     relative;
+  height:       20px;
+  background:   #0e0e0e;
+  border:       1px solid var(--border2);
+  overflow:     hidden;
+}
+
+.rpm-fill {
+  position:   absolute;
+  left:       0; top: 0;
+  height:     100%;
+  width:      0%;
+  transition: width 0.08s linear, background 0.2s;
+  background: var(--cyan);
+}
+
+/* Target line at 83% (5000/6000) */
+.rpm-target-line {
+  position:   absolute;
+  left:       83.33%;
+  top:        0;
+  width:      1px;
+  height:     100%;
+  background: var(--amber);
+  opacity:    0.5;
+}
+
+.shooter-ref {
+  display:     flex;
+  align-items: baseline;
+  gap:         8px;
+  margin-top:  auto;
+  font-size:   11px;
+}
+
+/* ── Duty Cycle Bar ──────────────────────────────────────────────────────── */
+.duty-track {
+  position:   relative;
+  height:     16px;
+  background: #0e0e0e;
+  border:     1px solid var(--border2);
+  overflow:   hidden;
+}
+
+.duty-center {
+  position:   absolute;
+  left:       50%;
+  top:        0;
+  width:      1px;
+  height:     100%;
+  background: var(--border2);
+  z-index:    1;
+}
+
+.duty-fill {
+  position:   absolute;
+  top:        0;
+  height:     100%;
+  width:      0%;
+  transition: left 0.08s linear, width 0.08s linear, background 0.15s;
+}
+
+/* ── Arm SVG ─────────────────────────────────────────────────────────────── */
+.arm-svg {
+  width:      100%;
+  flex:       1;
+  min-height: 0;
+  display:    block;
+}

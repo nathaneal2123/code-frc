@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FRC 8577</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── Header ── -->
+  <header>
+    <span class="team-num">8577</span>
+    <span id="timer" class="timer">-:--</span>
+    <div class="badges">
+      <span id="b-enabled" class="badge badge-err">DISABLED</span>
+      <span id="b-mode"    class="badge badge-info">TELEOP</span>
+      <span id="b-conn"    class="badge badge-off">NT: --</span>
+    </div>
+  </header>
+
+  <!-- ── Content Grid ── -->
+  <div class="grid">
+
+    <!-- Auto Chooser -->
+    <section class="panel">
+      <div class="panel-label">AUTONOMOUS</div>
+      <div class="field-label">SELECTED ROUTINE</div>
+      <select id="auto-select">
+        <option disabled selected>— connecting —</option>
+      </select>
+      <div class="auto-status">
+        <span class="field-label">ACTIVE&nbsp;</span>
+        <span id="auto-active" class="auto-active-val">—</span>
+      </div>
+    </section>
+
+    <!-- Shooter -->
+    <section class="panel">
+      <div class="panel-label">SHOOTER</div>
+
+      <div class="motor-block">
+        <div class="motor-header">
+          <span class="field-label">LEFT&nbsp;RPM</span>
+          <span class="big-val" id="rpm-left-val">—</span>
+        </div>
+        <div class="rpm-track">
+          <div class="rpm-fill" id="rpm-left-fill"></div>
+          <div class="rpm-target-line"></div>
+        </div>
+      </div>
+
+      <div class="motor-block">
+        <div class="motor-header">
+          <span class="field-label">RIGHT&nbsp;RPM</span>
+          <span class="big-val" id="rpm-right-val">—</span>
+        </div>
+        <div class="rpm-track">
+          <div class="rpm-fill" id="rpm-right-fill"></div>
+          <div class="rpm-target-line"></div>
+        </div>
+      </div>
+
+      <div class="shooter-ref">
+        <span class="field-label">TARGET</span>
+        <span style="color:var(--amber)">−5000 RPM</span>
+        <span class="field-label" style="margin-left:auto">MAX</span>
+        <span style="color:var(--muted)">6000 RPM</span>
+      </div>
+    </section>
+
+    <!-- Intake -->
+    <section class="panel">
+      <div class="panel-label">INTAKE</div>
+
+      <!-- SVG Arm Diagram -->
+      <!-- ViewBox 200×185. Pivot at (100,110). Arm sweeps 0°→150° from vertical. -->
+      <svg viewBox="0 0 200 185" class="arm-svg">
+        <!-- Degree tick marks -->
+        <line x1="100" y1="110" x2="100" y2="24" stroke="#1e1e1e" stroke-width="1" stroke-dasharray="3,4"/>
+        <!-- Range arc: 0°–150° (drawn by JS) -->
+        <path id="arm-range" fill="none" stroke="#1e1e1e" stroke-width="3"/>
+        <!-- Current-angle fill arc -->
+        <path id="arm-fill"  fill="none" stroke-width="10" stroke-linecap="round" stroke-opacity="0.25"/>
+        <!-- Arm -->
+        <line id="arm-line"  stroke="var(--cyan)" stroke-width="4"   stroke-linecap="round"/>
+        <!-- Pivot cap -->
+        <circle cx="100" cy="110" r="8"  fill="#161616" stroke="#3a3a3a" stroke-width="1.5"/>
+        <circle cx="100" cy="110" r="3"  fill="#666"/>
+        <!-- Roller circle at arm tip -->
+        <circle id="arm-roller" r="12" fill="none" stroke="var(--cyan)" stroke-width="2.5"/>
+        <!-- Angle readout -->
+        <text id="arm-angle-text" x="100" y="178" text-anchor="middle"
+              fill="#555" font-size="12" font-family="'Courier New',monospace">0.0°</text>
+        <!-- Stow label -->
+        <text x="105" y="22" fill="#333" font-size="9" font-family="'Courier New',monospace">STOW</text>
+      </svg>
+
+      <div class="motor-block">
+        <div class="motor-header">
+          <span class="field-label">ROLLER&nbsp;DUTY</span>
+          <span class="med-val" id="val-roller">0.00</span>
+        </div>
+        <div class="duty-track">
+          <div class="duty-center"></div>
+          <div class="duty-fill" id="duty-roller"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feeder + Hopper -->
+    <section class="panel">
+      <div class="panel-label">FEEDER / HOPPER</div>
+
+      <div class="motor-block">
+        <div class="motor-header">
+          <span class="field-label">FEEDER</span>
+          <span class="med-val" id="val-feeder">0.00</span>
+        </div>
+        <div class="duty-track">
+          <div class="duty-center"></div>
+          <div class="duty-fill" id="duty-feeder"></div>
+        </div>
+      </div>
+
+      <div class="separator"></div>
+
+      <div class="motor-block">
+        <div class="motor-header">
+          <span class="field-label">HOPPER</span>
+          <span class="med-val" id="val-hopper">0.00</span>
+        </div>
+        <div class="duty-track">
+          <div class="duty-center"></div>
+          <div class="duty-fill" id="duty-hopper"></div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- .grid -->
+
+  <script src="bundle.js"></script>
+</body>
+</html>

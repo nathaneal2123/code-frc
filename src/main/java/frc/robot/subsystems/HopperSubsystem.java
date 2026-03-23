@@ -8,6 +8,7 @@ import static edu.wpi.first.units.Units.Amps;
 import static edu.wpi.first.units.Units.Inches;
 import static edu.wpi.first.units.Units.Pounds;
 import static edu.wpi.first.units.Units.RPM;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -24,7 +25,7 @@ import yams.motorcontrollers.local.SparkWrapper;
 
 public class HopperSubsystem extends SubsystemBase {
 
-  private static final double HOPPER_SPEED = 1.0;
+  private static final double HOPPER_SPEED = 0.1;
 
   // Nova motor controller with NEO motor
   private SparkMax hopperSpark = new SparkMax(Constants.HopperConstants.kHopperMotorId, MotorType.kBrushless);
@@ -46,10 +47,9 @@ public class HopperSubsystem extends SubsystemBase {
       .withLowerSoftLimit(RPM.of(-6000))
       .withTelemetry("Hopper", TelemetryVerbosity.HIGH);
 
-  private FlyWheel hopper;
+  private FlyWheel hopper = new FlyWheel(hopperConfig);
 
   public HopperSubsystem() {
-    hopper = new FlyWheel(hopperConfig);
   }
 
   /**
@@ -76,6 +76,7 @@ public class HopperSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     hopper.updateTelemetry();
+    SmartDashboard.putNumber("Hopper DutyCycle", hopperSpark.get());
   }
 
   @Override
