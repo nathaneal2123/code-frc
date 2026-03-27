@@ -9,6 +9,7 @@ import static edu.wpi.first.units.Units.*;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
@@ -65,6 +66,20 @@ public class RobotContainer {
     }
 
     private void configurePathPlanner() {
+        // Register named commands for PathPlanner event markers and autos
+        NamedCommands.registerCommand("deployIntake", intake.deployAndRollCommand());
+        NamedCommands.registerCommand("stowIntake", intake.stowCommand());
+        NamedCommands.registerCommand("spinUpShooter",
+            shooter.shootBothCommand(ShooterSubsystem.DEFAULT_SHOOT_RPM));
+        NamedCommands.registerCommand("shoot",
+            hopper.feedCommand().alongWith(feeder.forwardCommand()));
+        NamedCommands.registerCommand("stopAll",
+            shooter.stopCommand()
+                .alongWith(intake.stowCommand())
+                .alongWith(hopper.stopCommand())
+                .alongWith(feeder.stopCommand()));
+        NamedCommands.registerCommand("shootSequence", shootSequence());
+
         try {
             AutoBuilder.configure(
                 () -> drivetrain.getState().Pose,
@@ -89,6 +104,10 @@ public class RobotContainer {
     private void configureAutoChooser() {
         autoChooser.setDefaultOption("New Auto", AutoBuilder.buildAuto("New Auto"));
         autoChooser.addOption("Not Human Shooter Side", AutoBuilder.buildAuto("not human shooter side"));
+        autoChooser.addOption("Trench 1", AutoBuilder.buildAuto("Trench1 Auto"));
+        autoChooser.addOption("Trench 2", AutoBuilder.buildAuto("Trench2 Auto"));
+        autoChooser.addOption("Bump 1", AutoBuilder.buildAuto("Bump1 Auto"));
+        autoChooser.addOption("Bump 2", AutoBuilder.buildAuto("Bump2 Auto"));
         SmartDashboard.putData("Auto Chooser", autoChooser);
     }
 

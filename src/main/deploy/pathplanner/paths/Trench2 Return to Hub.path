@@ -3,121 +3,105 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.5574733096085422,
-        "y": 7.3434519572953745
+        "x": 7.5,
+        "y": 4.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.431774956293056,
-        "y": 7.266006497470031
+        "x": 7.8,
+        "y": 3.0
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.516,
-        "y": 7.3434519572953745
+        "x": 8.0,
+        "y": 1.5
       },
       "prevControl": {
-        "x": 5.04984058140039,
-        "y": 7.404793748553633
+        "x": 7.85,
+        "y": 2.0
       },
       "nextControl": {
-        "x": 5.835412547910096,
-        "y": 7.301420546886399
+        "x": 8.15,
+        "y": 1.2
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 6.630749652199872,
-        "y": 7.171393062321911
+        "x": 7.78,
+        "y": 1.1
       },
       "prevControl": {
-        "x": 6.346194325283129,
-        "y": 7.147765462301046
+        "x": 8.1,
+        "y": 1.2
       },
       "nextControl": {
-        "x": 7.1121734651154895,
-        "y": 7.211367324674828
+        "x": 7.4,
+        "y": 1.0
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.4327502869523645,
-        "y": 6.988415113776107
+        "x": 6.63,
+        "y": 0.9
       },
       "prevControl": {
-        "x": 7.220138888883187,
-        "y": 7.1199308672472
+        "x": 7.11,
+        "y": 1.05
       },
       "nextControl": {
-        "x": 7.888867420792101,
-        "y": 6.706273191598958
+        "x": 6.35,
+        "y": 0.8
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.779689732710574,
-        "y": 4.521236652248683
+        "x": 5.52,
+        "y": 0.6
       },
       "prevControl": {
-        "x": 7.696149325824439,
-        "y": 5.168564845665622
+        "x": 5.99,
+        "y": 0.65
       },
       "nextControl": {
-        "x": 7.980366386116984,
-        "y": 2.9662567287299337
+        "x": 5.05,
+        "y": 0.55
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.915550962583483,
-        "y": 2.660566535768845
-      },
-      "prevControl": {
-        "x": 7.831326157186505,
-        "y": 2.8962872594972775
-      },
-      "nextControl": {
-        "x": 8.088828916018702,
-        "y": 2.175611962143943
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 7.974621008685411,
-        "y": 1.5711161971237426
-      },
-      "prevControl": {
-        "x": 8.1509958766983,
-        "y": 1.9030709557013146
-      },
-      "nextControl": {
-        "x": 7.6646246351379475,
-        "y": 0.9876726912533286
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 5.51564650059312,
+        "x": 3.5574733096085422,
         "y": 0.5974377224199281
       },
       "prevControl": {
-        "x": 6.028520688491459,
-        "y": 0.8599503983262753
+        "x": 4.87,
+        "y": 0.73
+      },
+      "nextControl": {
+        "x": 3.1,
+        "y": 1.5
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.0,
+        "y": 2.25
+      },
+      "prevControl": {
+        "x": 2.8,
+        "y": 1.5
       },
       "nextControl": null,
       "isLocked": false,
@@ -129,7 +113,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "",
+      "name": "stowIntake",
       "waypointRelativePos": 0.0,
       "endWaypointRelativePos": null,
       "command": null
@@ -145,10 +129,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 45.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Trench Autos",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0
